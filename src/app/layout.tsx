@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import CustomCursor from "@/components/CustomCursor";
 import LocallyXBubble from "@/components/LocallyXBubble";
+import MotionProviders from "@/components/MotionProviders";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -35,7 +36,9 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
       >
         <CustomCursor />
-        {children}
+        <MotionProviders>
+          {children}
+        </MotionProviders>
         <LocallyXBubble />
       </body>
     </html>

@@ -4,8 +4,10 @@ import { motion, type Variants } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef, type ReactNode } from "react";
 
+const ease = [0.22, 1, 0.36, 1] as const;
+
 const fadeInUp: Variants = {
-  hidden: { opacity: 0, y: 30 },
+  hidden: { opacity: 0, y: 22 },
   visible: { opacity: 1, y: 0 },
 };
 
@@ -18,12 +20,12 @@ const staggerContainer: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.12 },
+    transition: { staggerChildren: 0.08, delayChildren: 0.04 },
   },
 };
 
 const scaleIn: Variants = {
-  hidden: { opacity: 0, scale: 0.9 },
+  hidden: { opacity: 0, scale: 0.96 },
   visible: { opacity: 1, scale: 1 },
 };
 
@@ -37,7 +39,7 @@ export function FadeInUp({
   className?: string;
 }) {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-80px" });
+  const isInView = useInView(ref, { once: true, margin: "-60px", amount: 0.2 });
 
   return (
     <motion.div
@@ -45,7 +47,7 @@ export function FadeInUp({
       variants={fadeInUp}
       initial="hidden"
       animate={isInView ? "visible" : "hidden"}
-      transition={{ duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.45, delay, ease }}
       className={className}
     >
       {children}
@@ -63,7 +65,7 @@ export function FadeIn({
   className?: string;
 }) {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-80px" });
+  const isInView = useInView(ref, { once: true, margin: "-60px", amount: 0.2 });
 
   return (
     <motion.div
@@ -71,7 +73,7 @@ export function FadeIn({
       variants={fadeIn}
       initial="hidden"
       animate={isInView ? "visible" : "hidden"}
-      transition={{ duration: 0.8, delay, ease: "easeOut" }}
+      transition={{ duration: 0.5, delay, ease: "easeOut" }}
       className={className}
     >
       {children}
@@ -87,7 +89,7 @@ export function StaggerContainer({
   className?: string;
 }) {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-80px" });
+  const isInView = useInView(ref, { once: true, margin: "-60px", amount: 0.15 });
 
   return (
     <motion.div
@@ -110,7 +112,11 @@ export function StaggerItem({
   className?: string;
 }) {
   return (
-    <motion.div variants={fadeInUp} transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }} className={className}>
+    <motion.div
+      variants={fadeInUp}
+      transition={{ duration: 0.4, ease }}
+      className={className}
+    >
       {children}
     </motion.div>
   );
@@ -126,7 +132,7 @@ export function ScaleIn({
   className?: string;
 }) {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-80px" });
+  const isInView = useInView(ref, { once: true, margin: "-60px", amount: 0.2 });
 
   return (
     <motion.div
@@ -134,7 +140,7 @@ export function ScaleIn({
       variants={scaleIn}
       initial="hidden"
       animate={isInView ? "visible" : "hidden"}
-      transition={{ duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.45, delay, ease }}
       className={className}
     >
       {children}
@@ -152,14 +158,14 @@ export function SlideInLeft({
   className?: string;
 }) {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-80px" });
+  const isInView = useInView(ref, { once: true, margin: "-60px", amount: 0.2 });
 
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, x: -40 }}
-      animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -40 }}
-      transition={{ duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] }}
+      initial={{ opacity: 0, x: -28 }}
+      animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -28 }}
+      transition={{ duration: 0.45, delay, ease }}
       className={className}
     >
       {children}
@@ -177,14 +183,14 @@ export function SlideInRight({
   className?: string;
 }) {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-80px" });
+  const isInView = useInView(ref, { once: true, margin: "-60px", amount: 0.2 });
 
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, x: 40 }}
-      animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 40 }}
-      transition={{ duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] }}
+      initial={{ opacity: 0, x: 28 }}
+      animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 28 }}
+      transition={{ duration: 0.45, delay, ease }}
       className={className}
     >
       {children}

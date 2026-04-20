@@ -21,14 +21,14 @@ export default function ReadyCTA() {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a
               href="mailto:hello@scentio.com"
-              className="inline-flex items-center gap-2 font-medium bg-foreground text-background px-8 py-3.5 rounded-full hover:bg-accent transition-colors"
+              className="inline-flex items-center gap-2 rounded-full bg-foreground px-8 py-3.5 font-medium text-background transition-[transform,background-color,box-shadow] duration-200 ease-out will-change-transform hover:scale-[1.02] hover:bg-accent hover:shadow-md active:scale-[0.98]"
             >
               Book a Call
               <ArrowRight size={18} />
             </a>
             <a
               href="/work"
-              className="inline-flex items-center gap-2 font-medium border border-border text-foreground px-8 py-3.5 rounded-full hover:bg-muted-bg transition-colors"
+              className="inline-flex items-center gap-2 rounded-full border border-border px-8 py-3.5 font-medium text-foreground transition-[transform,background-color,box-shadow] duration-200 ease-out will-change-transform hover:scale-[1.02] hover:bg-muted-bg hover:shadow-sm active:scale-[0.98]"
             >
               See Locations
             </a>

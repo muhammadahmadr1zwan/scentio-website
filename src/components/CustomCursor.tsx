@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
+import { useEffect, useRef, useSyncExternalStore } from "react";
 
 function subscribeFinePointer(onStoreChange: () => void) {
   if (typeof window === "undefined") return () => {};
@@ -17,6 +17,34 @@ function getFinePointerServerSnapshot() {
   return false;
 }
 
+function isInteractiveTarget(el: EventTarget | null): boolean {
+  if (!el || !(el instanceof Element)) return false;
+  const t = el as HTMLElement;
+  return !!(
+    t.closest("a") ||
+    t.closest("button") ||
+    t.closest("input") ||
+    t.closest("textarea") ||
+    t.closest("select") ||
+    t.closest('[role="button"]')
+  );
+}
+
+const PALETTE = {
+  day: {
+    outer: "rgba(0, 0, 0, 0.2)",
+    inner: "rgba(0, 0, 0, 1)",
+    contrastRing: "rgba(255, 255, 255, 0.5)",
+    glow: "rgba(0, 0, 0, 0.38)",
+  },
+  night: {
+    outer: "rgba(255, 255, 255, 0.26)",
+    inner: "rgba(255, 255, 255, 1)",
+    contrastRing: "rgba(0, 0, 0, 0.35)",
+    glow: "rgba(255, 255, 255, 0.45)",
+  },
+} as const;
+
 export default function CustomCursor() {
   const enabled = useSyncExternalStore(
     subscribeFinePointer,
@@ -24,19 +52,11 @@ export default function CustomCursor() {
     getFinePointerServerSnapshot
   );
 
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-  const [isHovering, setIsHovering] = useState(false);
-  const [isPointerVisible, setIsPointerVisible] = useState(true);
-  const [hydrated, setHydrated] = useState(false);
-  const [isNightMode, setIsNightMode] = useState(false);
-
-  useEffect(() => {
-    queueMicrotask(() => {
-      setHydrated(true);
-      const hour = new Date().getHours();
-      setIsNightMode(hour >= 18 || hour < 6);
-    });
-  }, []);
+  const ringRef = useRef<HTMLDivElement>(null);
+  const rafRef = useRef(0);
+  const pendingRef = useRef({ x: 0, y: 0 });
+  const hoverRef = useRef(false);
+  const visibleRef = useRef(true);
 
   useEffect(() => {
     if (!enabled) return;
@@ -49,94 +69,98 @@ export default function CustomCursor() {
   useEffect(() => {
     if (!enabled) return;
 
-    const setThemeByTime = () => {
+    const el = ringRef.current;
+    if (!el) return;
+
+    const applyPalette = () => {
       const hour = new Date().getHours();
-      setIsNightMode(hour >= 18 || hour < 6);
+      const night = hour >= 18 || hour < 6;
+      const p = night ? PALETTE.night : PALETTE.day;
+      el.style.backgroundColor = p.outer;
+      el.style.border = `1.5px solid ${p.inner}`;
+      el.style.boxShadow = `0 0 0 1px ${p.contrastRing}, 0 8px 24px ${p.glow}`;
     };
 
-    const updatePosition = (e: MouseEvent) => {
-      setPosition({ x: e.clientX, y: e.clientY });
+    const syncSizeAndPosition = () => {
+      if (!ringRef.current) return;
+      const node = ringRef.current;
+      const { x, y } = pendingRef.current;
+      const hovering = hoverRef.current;
+      const size = hovering ? 56 : 36;
+      const offset = size / 2;
+      node.style.left = `${x - offset}px`;
+      node.style.top = `${y - offset}px`;
+      node.style.width = `${size}px`;
+      node.style.height = `${size}px`;
+      node.style.visibility = visibleRef.current ? "visible" : "hidden";
     };
 
-    const handleMouseOver = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      if (
-        target.tagName === "A" ||
-        target.tagName === "BUTTON" ||
-        target.tagName === "INPUT" ||
-        target.tagName === "TEXTAREA" ||
-        target.closest("a") ||
-        target.closest("button") ||
-        target.closest("input") ||
-        target.closest("textarea")
-      ) {
-        setIsHovering(true);
-      } else {
-        setIsHovering(false);
+    const flush = () => {
+      rafRef.current = 0;
+      syncSizeAndPosition();
+    };
+
+    const scheduleFlush = () => {
+      if (rafRef.current) return;
+      rafRef.current = requestAnimationFrame(flush);
+    };
+
+    const onMove = (e: MouseEvent) => {
+      pendingRef.current = { x: e.clientX, y: e.clientY };
+      scheduleFlush();
+    };
+
+    const onOver = (e: MouseEvent) => {
+      const next = isInteractiveTarget(e.target);
+      if (next !== hoverRef.current) {
+        hoverRef.current = next;
+        scheduleFlush();
       }
     };
 
-    const handleMouseLeave = () => {
-      setIsPointerVisible(false);
+    const onLeaveWin = () => {
+      visibleRef.current = false;
+      scheduleFlush();
     };
 
-    const handleMouseEnter = () => {
-      setIsPointerVisible(true);
+    const onEnterWin = () => {
+      visibleRef.current = true;
+      scheduleFlush();
     };
 
-    setThemeByTime();
-    const themeInterval = window.setInterval(setThemeByTime, 60_000);
+    applyPalette();
+    const themeInterval = window.setInterval(applyPalette, 60_000);
 
-    window.addEventListener("mousemove", updatePosition);
-    window.addEventListener("mouseover", handleMouseOver);
-    document.addEventListener("mouseleave", handleMouseLeave);
-    document.addEventListener("mouseenter", handleMouseEnter);
+    window.addEventListener("mousemove", onMove, { passive: true });
+    window.addEventListener("mouseover", onOver, { passive: true });
+    document.addEventListener("mouseleave", onLeaveWin);
+    document.addEventListener("mouseenter", onEnterWin);
 
     return () => {
       window.clearInterval(themeInterval);
-      window.removeEventListener("mousemove", updatePosition);
-      window.removeEventListener("mouseover", handleMouseOver);
-      document.removeEventListener("mouseleave", handleMouseLeave);
-      document.removeEventListener("mouseenter", handleMouseEnter);
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      window.removeEventListener("mousemove", onMove);
+      window.removeEventListener("mouseover", onOver);
+      document.removeEventListener("mouseleave", onLeaveWin);
+      document.removeEventListener("mouseenter", onEnterWin);
     };
   }, [enabled]);
 
-  const palette = useMemo(
-    () =>
-      hydrated && isNightMode
-        ? {
-            outer: "rgba(255, 255, 255, 0.26)",
-            inner: "rgba(255, 255, 255, 1)",
-            contrastRing: "rgba(0, 0, 0, 0.35)",
-            glow: "rgba(255, 255, 255, 0.45)",
-          }
-        : {
-            outer: "rgba(0, 0, 0, 0.2)",
-            inner: "rgba(0, 0, 0, 1)",
-            contrastRing: "rgba(255, 255, 255, 0.5)",
-            glow: "rgba(0, 0, 0, 0.38)",
-          },
-    [hydrated, isNightMode]
-  );
-
-  if (!enabled || !isPointerVisible) return null;
+  if (!enabled) return null;
 
   return (
     <div
-      className="fixed pointer-events-none z-[9999] rounded-full"
+      ref={ringRef}
+      className="fixed pointer-events-none z-[9999] rounded-full will-change-transform"
       style={{
-        left: position.x - 20,
-        top: position.y - 20,
-        width: isHovering ? 56 : 36,
-        height: isHovering ? 56 : 36,
-        backgroundColor: palette.outer,
-        border: `1.5px solid ${palette.inner}`,
-        boxShadow: `0 0 0 1px ${palette.contrastRing}, 0 8px 24px ${palette.glow}`,
-        transform: "translate3d(0, 0, 0)",
-        transition:
-          "width 160ms ease, height 160ms ease, background-color 280ms ease, border-color 280ms ease",
-        backdropFilter: "blur(2px)",
+        left: -100,
+        top: -100,
+        width: 36,
+        height: 36,
+        transform: "translateZ(0)",
+        transition: "width 120ms ease, height 120ms ease",
       }}
+      aria-hidden
     />
   );
 }

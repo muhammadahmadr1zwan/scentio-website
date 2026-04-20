@@ -1,17 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import { SlideInLeft, SlideInRight, StaggerContainer, StaggerItem } from "./Motion";
-import { Mail } from "lucide-react";
-
-const experiences = [
-  { role: "Founder & CEO", company: "Scentio", period: "2023 - Present" },
-  { role: "Vending Partnerships & Growth", company: "Scentio", period: "2023 - Present" },
-  { role: "Brand Strategy Lead", company: "Fragrance Ventures", period: "2022 - 2023" },
-  { role: "Operations Manager", company: "Vending Solutions Inc.", period: "2020 - 2022" },
-  { role: "Business Development", company: "Retail Innovations", period: "2019 - 2020" },
-  { role: "Marketing Specialist", company: "Wellness Brands", period: "2018 - 2019" },
-];
+import mahmoudPortrait from "@/assets/mahmoud-smadi.png";
+import { SlideInLeft, SlideInRight } from "./Motion";
+import { Mail, Phone } from "lucide-react";
 
 export default function About() {
   return (
@@ -19,22 +11,26 @@ export default function About() {
       <div className="mx-auto max-w-6xl px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <SlideInLeft>
-            <div className="relative rounded-2xl overflow-hidden aspect-[4/5]">
-              <Image
-                src="/images/perfume-1.jpg"
-                alt="Scentio founder"
-                fill
-                className="object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
-              <div className="absolute bottom-6 left-6 right-6">
-                <p className="text-xs font-medium tracking-wider uppercase text-accent-light">
+            <div className="rounded-2xl overflow-hidden border border-border bg-white shadow-sm max-w-md mx-auto lg:mx-0">
+              <div className="relative aspect-square w-full bg-white">
+                <Image
+                  src={mahmoudPortrait}
+                  alt="Professional headshot of Mahmoud Smadi, CEO of Scentio."
+                  fill
+                  sizes="(min-width: 1024px) 28rem, 100vw"
+                  className="object-contain object-center"
+                  placeholder="blur"
+                  priority
+                />
+              </div>
+              <div className="px-6 py-5 border-t border-border bg-muted-bg/50">
+                <p className="text-xs font-medium tracking-wider uppercase text-accent">
                   Founder & CEO
                 </p>
-                <p className="text-lg font-semibold text-white mt-1">
+                <p className="text-lg font-semibold text-foreground mt-1">
                   Mahmoud Smadi
                 </p>
-                <p className="text-sm text-white/60 mt-1">
+                <p className="text-sm text-muted mt-1">
                   Brand Development · Partnerships · Licensing · Operations
                 </p>
               </div>
@@ -58,6 +54,13 @@ export default function About() {
                   Contact Mahmoud
                 </a>
                 <a
+                  href="tel:3179821253"
+                  className="inline-flex items-center gap-2 font-medium text-foreground hover:text-accent transition-colors"
+                >
+                  <Phone size={18} />
+                  317-982-1253
+                </a>
+                <a
                   href="https://www.linkedin.com/in/mahmoud-smadi-3595a733b/"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -66,20 +69,6 @@ export default function About() {
                   LinkedIn Profile
                 </a>
               </div>
-
-              <StaggerContainer className="space-y-0 mt-8">
-                {experiences.map((exp, index) => (
-                  <StaggerItem key={index}>
-                    <div className="flex items-center justify-between py-3 border-b border-border">
-                      <div>
-                        <h4 className="font-medium text-foreground text-sm">{exp.role}</h4>
-                        <p className="text-xs text-muted">{exp.company}</p>
-                      </div>
-                      <p className="text-xs text-accent font-medium">{exp.period}</p>
-                    </div>
-                  </StaggerItem>
-                ))}
-              </StaggerContainer>
             </div>
           </SlideInRight>
         </div>

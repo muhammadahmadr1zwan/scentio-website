@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { siteImages } from "@/lib/site-images";
 import { ArrowRight } from "lucide-react";
 import { FadeInUp } from "./Motion";
 
@@ -9,8 +10,8 @@ export default function CTA() {
     <section id="contact" className="relative py-24 sm:py-32 overflow-hidden">
       <div className="absolute inset-0">
         <Image
-          src="/images/gym-environment.jpg"
-          alt="Gym environment"
+          src={siteImages.gymInterior}
+          alt="High-traffic gym floor — ideal venue for Scentio fragrance vending"
           fill
           className="object-cover"
         />

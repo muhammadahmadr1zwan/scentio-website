@@ -27,11 +27,11 @@ export default function Footer() {
               <div className="space-y-4">
                 <div>
                   <h3 className="text-sm font-medium text-background/50 mb-1">Scentio</h3>
-                  <a href="tel:1234567890" className="text-background hover:text-accent-light transition-colors">
-                    123-456-7890
+                  <a href="tel:3179821253" className="text-background hover:text-accent-light transition-colors">
+                    317-982-1253
                   </a>
                   <p className="text-background/50 text-sm mt-1">
-                    123 Sakura Street, New York City, NY, USA
+                    United States · Serving gyms nationwide
                   </p>
                 </div>
               </div>

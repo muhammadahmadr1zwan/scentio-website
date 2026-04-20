@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { siteImages } from "@/lib/site-images";
 import { CreditCard, Sparkles, Droplets, Star } from "lucide-react";
 import { FadeInUp, StaggerContainer, StaggerItem } from "./Motion";
 
@@ -16,7 +17,8 @@ const services = [
       "No app download required",
       "Instant access with single tap",
     ],
-    image: "/images/perfume-spray.jpg",
+    image: siteImages.contactlessTapPay,
+    imageAlt: "Contactless card or phone tap at a payment terminal",
   },
   {
     icon: Sparkles,
@@ -29,7 +31,8 @@ const services = [
       "Fresh aquatic, woody, oriental profiles",
       "Seasonal rotation based on preferences",
     ],
-    image: "/images/creed-bottle.jpg",
+    image: siteImages.fragranceCounterDisplay,
+    imageAlt: "Retail fragrance display — choosing from a curated lineup of premium scents",
   },
   {
     icon: Droplets,
@@ -42,7 +45,8 @@ const services = [
       "Clean, precise spray technology",
       "Long-lasting fragrance release",
     ],
-    image: "/images/cologne-bottle.jpg",
+    image: siteImages.fineFragranceMist,
+    imageAlt: "Fine fragrance mist from a spray bottle — precise dispensing",
   },
   {
     icon: Star,
@@ -55,7 +59,8 @@ const services = [
       "Instant refresh after workouts",
       "Premium brand-quality scents",
     ],
-    image: "/images/perfume-1.jpg",
+    image: siteImages.refreshedAfterUse,
+    imageAlt: "Feeling confident and refreshed after a workout",
   },
 ];
 
@@ -79,13 +84,13 @@ export default function HowItWorks() {
         <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {services.map((service) => (
             <StaggerItem key={service.number}>
-              <div className="group bg-white rounded-2xl overflow-hidden border border-border hover:shadow-lg transition-shadow">
+              <div className="group overflow-hidden rounded-2xl border border-border bg-white shadow-sm transition-[transform,box-shadow] duration-300 ease-out will-change-transform hover:-translate-y-1 hover:shadow-xl">
                 <div className="relative h-44 overflow-hidden">
                   <Image
                     src={service.image}
-                    alt={service.title}
+                    alt={service.imageAlt}
                     fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04]"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
                   <div className="absolute bottom-3 left-3 flex items-center gap-2">

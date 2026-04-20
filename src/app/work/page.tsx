@@ -2,6 +2,7 @@
 
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { siteImages } from "@/lib/site-images";
 import { FadeInUp, StaggerContainer, StaggerItem } from "@/components/Motion";
 import { Star, Building2, Users, TrendingUp } from "lucide-react";
 import Image from "next/image";
@@ -35,12 +36,12 @@ const testimonials = [
 ];
 
 const partnerBrands = [
-  { name: "Noir Absolu", category: "Woody" },
-  { name: "Aqua Sport", category: "Fresh" },
-  { name: "Oud Reserve", category: "Oriental" },
-  { name: "Citrus Burst", category: "Zesty" },
-  { name: "Velvet Night", category: "Spicy" },
-  { name: "Coastal Breeze", category: "Aquatic" },
+  { name: "Noir Absolu", category: "Woody", image: "/images/cologne-bottle.jpg" },
+  { name: "Aqua Sport", category: "Fresh", image: "/images/perfume-1.jpg" },
+  { name: "Oud Reserve", category: "Oriental", image: "/images/creed-bottle.jpg" },
+  { name: "Citrus Burst", category: "Zesty", image: siteImages.citrusZesty },
+  { name: "Velvet Night", category: "Spicy", image: siteImages.warmSpicyBottle },
+  { name: "Coastal Breeze", category: "Aquatic", image: "/images/perfume-1.jpg" },
 ];
 
 export default function WorkPage() {
@@ -107,13 +108,13 @@ export default function WorkPage() {
             </div>
 
             <StaggerContainer className="grid grid-cols-2 md:grid-cols-3 gap-6">
-              {partnerBrands.map((brand, i) => (
+              {partnerBrands.map((brand) => (
                 <StaggerItem key={brand.name}>
                   <div className="bg-white rounded-2xl overflow-hidden border border-border group cursor-pointer">
                     <div className="relative h-48 overflow-hidden">
                       <Image
-                        src={`/images/${i % 2 === 0 ? 'cologne-bottle.jpg' : 'creed-bottle.jpg'}`}
-                        alt={brand.name}
+                        src={brand.image}
+                        alt={`${brand.name} — ${brand.category} fragrance profile`}
                         fill
                         className="object-cover group-hover:scale-105 transition-transform duration-500"
                       />

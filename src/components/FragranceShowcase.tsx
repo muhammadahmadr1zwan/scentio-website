@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { siteImages } from "@/lib/site-images";
 import { FadeInUp, StaggerContainer, StaggerItem } from "./Motion";
 
 const fragrances = [
@@ -22,7 +23,7 @@ const fragrances = [
   {
     name: "Citrus Burst",
     category: "Light & Zesty",
-    image: "/images/perfume-display.jpg",
+    image: siteImages.citrusZesty,
   },
 ];
 
@@ -53,12 +54,12 @@ export default function FragranceShowcase() {
         <StaggerContainer className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
           {fragrances.map((fragrance) => (
             <StaggerItem key={fragrance.name}>
-              <div className="group relative rounded-2xl overflow-hidden aspect-[3/4] bg-muted-bg cursor-pointer">
+              <div className="group relative aspect-[3/4] cursor-pointer overflow-hidden rounded-2xl bg-muted-bg shadow-sm transition-[transform,box-shadow] duration-300 ease-out will-change-transform hover:-translate-y-1 hover:shadow-lg">
                 <Image
                   src={fragrance.image}
-                  alt={fragrance.name}
+                  alt={`${fragrance.name}, ${fragrance.category} fragrance`}
                   fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-700"
+                  className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04]"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
                 <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6">

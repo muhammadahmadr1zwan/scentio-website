@@ -32,7 +32,7 @@ export default function Navbar() {
 
   return (
     <header
-      className={`pointer-events-auto fixed top-0 left-0 right-0 z-[200] transition-[background-color,box-shadow,border-color] duration-300 ${
+      className={`pointer-events-auto fixed top-0 left-0 right-0 z-[200] transition-[background-color,box-shadow,border-color,backdrop-filter] duration-300 ease-out ${
         solid
           ? "border-b border-border/80 bg-white/90 shadow-[0_1px_0_rgba(0,0,0,0.04)] backdrop-blur-md"
           : "border-b border-white/10 bg-gradient-to-b from-black/50 to-transparent"
@@ -73,7 +73,7 @@ export default function Navbar() {
                   key={link.href}
                   href={link.href}
                   prefetch
-                  className={`relative shrink-0 touch-manipulation rounded-full px-2.5 py-1.5 text-[13px] font-medium tracking-tight transition-colors sm:px-3 sm:text-sm ${
+                  className={`relative shrink-0 touch-manipulation rounded-full px-2.5 py-1.5 text-[13px] font-medium tracking-tight transition-[color,transform] duration-200 ease-out hover:opacity-100 sm:px-3 sm:text-sm ${
                     solid
                       ? active
                         ? "text-foreground"

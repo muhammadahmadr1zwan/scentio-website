@@ -2,6 +2,7 @@
 
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { siteImages } from "@/lib/site-images";
 import { FadeInUp, StaggerContainer, StaggerItem, SlideInLeft, SlideInRight } from "@/components/Motion";
 import { Package, Droplets, Sparkles, Wrench, Truck, ShieldCheck, Clock, CreditCard } from "lucide-react";
 import Image from "next/image";
@@ -45,14 +46,16 @@ const machines = [
     sprays: "Up to 500 sprays",
     brands: "4 premium brands",
     price: "Pay-per-spray",
-    image: "/images/creed-bottle.jpg",
+    image: "/images/cologne-bottle.jpg",
+    imageAlt: "Scentio Standard — compact lineup of four premium fragrance brands",
   },
   {
     name: "Scentio Pro",
     sprays: "Up to 1000 sprays",
     brands: "8 premium brands",
     price: "Pay-per-spray",
-    image: "/images/cologne-bottle.jpg",
+    image: siteImages.fragranceCounterDisplay,
+    imageAlt: "Scentio Pro — expanded retail-style selection of eight premium brands",
   },
 ];
 
@@ -128,8 +131,8 @@ export default function ServicesPage() {
                 <SlideInLeft>
                   <div className="relative rounded-2xl overflow-hidden aspect-[4/3]">
                     <Image
-                      src="/images/creed-bottle.jpg"
-                      alt="Consultation"
+                      src={siteImages.gymInterior}
+                      alt="Gym site assessment and consultation"
                       fill
                       className="object-cover"
                     />
@@ -159,8 +162,8 @@ export default function ServicesPage() {
                 <SlideInRight className="order-1 lg:order-2">
                   <div className="relative rounded-2xl overflow-hidden aspect-[4/3]">
                     <Image
-                      src="/images/perfume-spray.jpg"
-                      alt="Installation"
+                      src={siteImages.fineFragranceMist}
+                      alt="Scentio machine installation and first spray"
                       fill
                       className="object-cover"
                     />
@@ -172,8 +175,8 @@ export default function ServicesPage() {
                 <SlideInLeft>
                   <div className="relative rounded-2xl overflow-hidden aspect-[4/3]">
                     <Image
-                      src="/images/perfume-display.jpg"
-                      alt="Ongoing Management"
+                      src={siteImages.fragranceCounterDisplay}
+                      alt="Fragrance restocking and curated selection"
                       fill
                       className="object-cover"
                     />
@@ -216,7 +219,7 @@ export default function ServicesPage() {
                     <div className="relative h-48">
                       <Image
                         src={machine.image}
-                        alt={machine.name}
+                        alt={machine.imageAlt}
                         fill
                         className="object-cover"
                       />

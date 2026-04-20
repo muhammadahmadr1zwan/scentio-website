@@ -7,7 +7,7 @@ export default function LocallyXBubble() {
       href="https://locally-x.app/"
       target="_blank"
       rel="noopener noreferrer"
-      className="fixed bottom-4 right-4 z-[60] bg-foreground text-background text-xs font-medium px-3 py-2 rounded-full hover:bg-accent transition-colors shadow-lg"
+      className="fixed bottom-4 right-4 z-[60] rounded-full bg-foreground px-3 py-2 text-xs font-medium text-background shadow-lg transition-[transform,background-color,box-shadow] duration-200 ease-out hover:scale-[1.03] hover:bg-accent hover:shadow-xl active:scale-100"
     >
       Built by LocallyX
     </a>

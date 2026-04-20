@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import { FadeInUp, SlideInLeft, SlideInRight } from "@/components/Motion";
 import { Mail, Phone, Send, Clock, CheckCircle } from "lucide-react";
 import Image from "next/image";
+import { siteImages } from "@/lib/site-images";
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -167,8 +168,8 @@ export default function ContactPage() {
                 <div className="space-y-8">
                   <div className="relative rounded-2xl overflow-hidden aspect-[4/3]">
                     <Image
-                      src="/images/perfume-1.jpg"
-                      alt="Contact Scentio"
+                      src={siteImages.gymInterior}
+                      alt="Scentio partner locations across the United States"
                       fill
                       className="object-cover"
                     />
