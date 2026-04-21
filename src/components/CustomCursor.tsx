@@ -30,19 +30,11 @@ function isInteractiveTarget(el: EventTarget | null): boolean {
   );
 }
 
-const PALETTE = {
-  day: {
-    outer: "rgba(0, 0, 0, 0.2)",
-    inner: "rgba(0, 0, 0, 1)",
-    contrastRing: "rgba(255, 255, 255, 0.5)",
-    glow: "rgba(0, 0, 0, 0.38)",
-  },
-  night: {
-    outer: "rgba(255, 255, 255, 0.26)",
-    inner: "rgba(255, 255, 255, 1)",
-    contrastRing: "rgba(0, 0, 0, 0.35)",
-    glow: "rgba(255, 255, 255, 0.45)",
-  },
+const CURSOR_STYLE = {
+  outer: "rgba(255, 255, 255, 0.22)",
+  inner: "rgba(255, 255, 255, 1)",
+  contrastRing: "rgba(0, 0, 0, 0.28)",
+  glow: "rgba(255, 255, 255, 0.25)",
 } as const;
 
 export default function CustomCursor() {
@@ -72,13 +64,10 @@ export default function CustomCursor() {
     const el = ringRef.current;
     if (!el) return;
 
-    const applyPalette = () => {
-      const hour = new Date().getHours();
-      const night = hour >= 18 || hour < 6;
-      const p = night ? PALETTE.night : PALETTE.day;
-      el.style.backgroundColor = p.outer;
-      el.style.border = `1.5px solid ${p.inner}`;
-      el.style.boxShadow = `0 0 0 1px ${p.contrastRing}, 0 8px 24px ${p.glow}`;
+    const applyStyle = () => {
+      el.style.backgroundColor = CURSOR_STYLE.outer;
+      el.style.border = `1.5px solid ${CURSOR_STYLE.inner}`;
+      el.style.boxShadow = `0 0 0 1px ${CURSOR_STYLE.contrastRing}, 0 8px 24px ${CURSOR_STYLE.glow}`;
     };
 
     const syncSizeAndPosition = () => {
@@ -128,8 +117,7 @@ export default function CustomCursor() {
       scheduleFlush();
     };
 
-    applyPalette();
-    const themeInterval = window.setInterval(applyPalette, 60_000);
+    applyStyle();
 
     window.addEventListener("mousemove", onMove, { passive: true });
     window.addEventListener("mouseover", onOver, { passive: true });
@@ -137,7 +125,6 @@ export default function CustomCursor() {
     document.addEventListener("mouseenter", onEnterWin);
 
     return () => {
-      window.clearInterval(themeInterval);
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
       window.removeEventListener("mousemove", onMove);
       window.removeEventListener("mouseover", onOver);
@@ -151,7 +138,7 @@ export default function CustomCursor() {
   return (
     <div
       ref={ringRef}
-      className="fixed pointer-events-none z-[9999] rounded-full will-change-transform"
+      className="fixed pointer-events-none z-[9999] rounded-full will-change-transform mix-blend-difference"
       style={{
         left: -100,
         top: -100,

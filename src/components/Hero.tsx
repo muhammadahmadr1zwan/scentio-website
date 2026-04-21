@@ -15,6 +15,7 @@ export default function Hero() {
           src="/images/cologne-dark.jpg"
           alt=""
           fill
+          sizes="100vw"
           className="object-cover object-center"
           priority
         />

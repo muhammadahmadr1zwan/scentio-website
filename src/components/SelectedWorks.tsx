@@ -71,6 +71,7 @@ export default function SelectedWorks() {
                   src={venue.image}
                   alt=""
                   fill
+                  sizes="(min-width: 640px) 50vw, 100vw"
                   className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04]"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
