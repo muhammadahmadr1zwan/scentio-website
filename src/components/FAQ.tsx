@@ -5,63 +5,58 @@ import { FadeInUp, StaggerContainer, StaggerItem } from "./Motion";
 
 const faqs = [
   {
-    question: "How much does it cost to install a Scentio machine?",
+    question: "How much does installation cost?",
     answer:
-      "Installation is free for qualifying gyms and high-traffic venues. We handle everything from placement to setup, with no upfront cost to you.",
+      "For qualifying venues, installation is free. There is no upfront fee and no long-term contract — we invest in placement because we only succeed when your venue benefits from it.",
   },
   {
-    question: "What fragrances are available?",
+    question: "Who handles refills and maintenance?",
     answer:
-      "We offer a curated rotation of premium scents including fresh aquatic, woody and warm, oriental, and citrus profiles. Selections rotate seasonally based on member preferences.",
+      "We do. Scentio handles all restocking, cleaning, and servicing on a regular schedule. You focus on running your venue — we keep the machine working and stocked.",
   },
   {
-    question: "How do members pay?",
+    question: "How do customers pay?",
     answer:
-      "Simple tap-to-pay using any contactless credit card or mobile wallet. No app download required, no membership signups — just tap and spray.",
+      "Tap-to-pay using any contactless credit card or mobile wallet. No app, no sign-up, no gym membership required. It takes about three seconds per customer.",
   },
   {
-    question: "How much revenue can my venue earn?",
+    question: "How do I make money from this?",
     answer:
-      "Revenue varies by traffic, but our partners typically earn 15-25% of each spray. High-traffic locations see significant monthly revenue with zero operational overhead.",
+      "You get a share of every transaction, paid out on a regular schedule. We break down the exact split and projected monthly numbers based on your traffic during the consult.",
   },
   {
-    question: "Who handles maintenance and refills?",
+    question: "Which venues are a good fit?",
     answer:
-      "Scentio handles all maintenance, refills, and servicing. You focus on running your venue — we handle the fragrance experience.",
+      "Gyms, hotels, retail stores, private clubs, and any location with consistent daily foot traffic where premium experience matters. If you’re not sure, reach out — we’ll tell you honestly.",
   },
   {
     question: "How long does installation take?",
     answer:
-      "Installation typically takes 1-2 hours. We coordinate with your team to find the optimal placement and ensure minimal disruption to your operations.",
+      "Usually 1–2 hours on-site. We coordinate with your team so there’s no disruption to customers or operations.",
   },
 ];
 
 export default function FAQ() {
   return (
-    <section id="faq" className="py-24 sm:py-32 bg-muted-bg">
+    <section id="faq" className="py-24 sm:py-28 bg-white">
       <div className="mx-auto max-w-3xl px-6">
-        <div className="text-center mb-14 sm:mb-16">
+        <div className="mb-12 sm:mb-14">
           <FadeInUp>
-            <p className="text-xs font-medium tracking-[0.28em] uppercase text-accent mb-3">
-              Support
+            <p className="text-xs font-medium tracking-[0.24em] uppercase text-accent mb-3">
+              FAQ
             </p>
           </FadeInUp>
           <FadeInUp delay={0.08}>
             <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-foreground">
-              Frequently asked questions
+              Common questions
             </h2>
-          </FadeInUp>
-          <FadeInUp delay={0.16}>
-            <p className="mt-4 text-lg text-muted">
-              Common questions about Scentio installation and partnership.
-            </p>
           </FadeInUp>
         </div>
 
         <StaggerContainer className="space-y-3">
           {faqs.map((faq) => (
             <StaggerItem key={faq.question}>
-              <details className="group rounded-2xl border border-border bg-white px-6 py-5 open:shadow-sm transition-shadow">
+              <details className="group rounded-2xl border border-border bg-muted-bg/60 px-6 py-5 open:bg-white open:shadow-sm transition-[background-color,box-shadow]">
                 <summary className="flex items-center justify-between gap-6 cursor-pointer list-none marker:hidden">
                   <span className="text-base sm:text-lg font-semibold text-foreground">
                     {faq.question}
