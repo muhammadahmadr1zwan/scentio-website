@@ -1,38 +1,67 @@
 "use client";
 
+import Link from "next/link";
 import { FadeInUp } from "./Motion";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Phone } from "lucide-react";
 
 export default function ReadyCTA() {
   return (
-    <section className="py-24 sm:py-32 bg-white">
-      <div className="mx-auto max-w-4xl px-6 text-center">
+    <section className="relative py-24 sm:py-32 bg-foreground text-background overflow-hidden">
+      <div
+        aria-hidden
+        className="absolute inset-0 opacity-[0.12] [background-image:radial-gradient(circle_at_1px_1px,white_1px,transparent_0)] [background-size:22px_22px]"
+      />
+      <div
+        aria-hidden
+        className="absolute -top-24 -right-24 h-72 w-72 rounded-full bg-accent/20 blur-3xl"
+      />
+      <div
+        aria-hidden
+        className="absolute -bottom-32 -left-24 h-80 w-80 rounded-full bg-accent-light/15 blur-3xl"
+      />
+
+      <div className="relative mx-auto max-w-4xl px-6 text-center">
         <FadeInUp>
-          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-foreground mb-6">
-            Ready to bring Scentio to your venue?
-          </h2>
-        </FadeInUp>
-        <FadeInUp delay={0.1}>
-          <p className="text-lg text-muted mb-8 max-w-2xl mx-auto">
-            Get in touch for a free consultation. We&apos;ll assess your space, discuss revenue potential, and create a custom plan for your gym or high-traffic venue.
+          <p className="text-xs font-medium tracking-[0.28em] uppercase text-accent-light mb-4">
+            Let&apos;s build something great
           </p>
         </FadeInUp>
-        <FadeInUp delay={0.2}>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <a
-              href="mailto:hello@scentio.com"
-              className="inline-flex items-center gap-2 rounded-full bg-foreground px-8 py-3.5 font-medium text-background transition-[transform,background-color,box-shadow] duration-200 ease-out will-change-transform hover:scale-[1.02] hover:bg-accent hover:shadow-md active:scale-[0.98]"
+        <FadeInUp delay={0.08}>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight leading-tight">
+            Ready to bring Scentio
+            <br />
+            <span className="text-accent-light">to your venue?</span>
+          </h2>
+        </FadeInUp>
+        <FadeInUp delay={0.16}>
+          <p className="mt-6 text-lg text-background/70 max-w-2xl mx-auto leading-relaxed">
+            Get in touch for a free consultation. We&apos;ll assess your space,
+            discuss revenue potential, and create a custom plan for your gym or
+            high-traffic venue.
+          </p>
+        </FadeInUp>
+        <FadeInUp delay={0.24}>
+          <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
+            <Link
+              href="/contact"
+              className="group w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full bg-accent px-8 py-3.5 font-medium text-white shadow-lg shadow-accent/30 transition-[transform,background-color,box-shadow] duration-200 ease-out hover:scale-[1.02] hover:bg-accent-light hover:shadow-xl active:scale-[0.98]"
             >
-              Book a Call
-              <ArrowRight size={18} />
-            </a>
+              Book a free call
+              <ArrowRight size={18} className="transition-transform duration-200 group-hover:translate-x-0.5" />
+            </Link>
             <a
-              href="/work"
-              className="inline-flex items-center gap-2 rounded-full border border-border px-8 py-3.5 font-medium text-foreground transition-[transform,background-color,box-shadow] duration-200 ease-out will-change-transform hover:scale-[1.02] hover:bg-muted-bg hover:shadow-sm active:scale-[0.98]"
+              href="tel:3179821253"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full border border-background/20 bg-background/5 backdrop-blur px-8 py-3.5 font-medium text-background transition-colors hover:bg-background/10"
             >
-              See Locations
+              <Phone size={16} />
+              317-982-1253
             </a>
           </div>
+        </FadeInUp>
+        <FadeInUp delay={0.32}>
+          <p className="mt-8 text-xs sm:text-sm text-background/50">
+            Free consultation · No commitment · Zero upfront cost
+          </p>
         </FadeInUp>
       </div>
     </section>
